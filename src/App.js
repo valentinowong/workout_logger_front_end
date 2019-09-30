@@ -45,6 +45,11 @@ class App extends React.Component {
     })
   }
 
+  signOut = e => {
+    e.preventDefault();
+    console.log(this.state.currentUser)
+  }
+
   render() {
     return(
       <Router>
@@ -71,6 +76,7 @@ class App extends React.Component {
                 logWorkout={this.logWorkout} 
               />}
           />
+          
         </div>
       </Router>
     )

@@ -2,8 +2,6 @@ import React from 'react';
 
 const Exercise = (props) => {
 
-    console.log(props.exercise)
-
     const {name, routine_distance, routine_duration, routine_quantity, routine_weight} = props.exercise
 
     const renderDistanceExercise = () => {

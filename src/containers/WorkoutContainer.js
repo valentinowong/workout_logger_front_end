@@ -1,14 +1,10 @@
 import React from 'react';
 import WorkoutList from '../components/WorkoutList'
 import WorkoutDetails from '../components/WorkoutDetails'
-import API from '../Api'
 
-class WorkoutContainer extends React.Component {
-  state = {
-    workouts: [],
-    selectedWorkoutId: 1
-  }  
+const WorkoutContainer = (props) => {
 
+<<<<<<< HEAD
   componentDidMount() {
     this.fetchWorkouts();
   }
@@ -49,6 +45,14 @@ class WorkoutContainer extends React.Component {
       selectedWorkoutId: workout_id
     })
   }
+=======
+  return(
+    <div className="container row">
+      <WorkoutList workouts={props.workouts} selectWorkout={props.selectWorkout}/>
+      <WorkoutDetails workout={props.findSelectedWorkout()}/>
+    </div>
+  )
+>>>>>>> workout-logging-part-1
 
 }
 

@@ -41,9 +41,9 @@ class App extends React.Component {
         {/* <NavBar /> */}
         <Route exact path="/" component={Login} />
         <Route exact path="/signup" component={() => <Signup loginUser={this.loginUser} />} />
-        <Route exact path="/workout" component={WorkoutContainer} />
+        <Route exact path="/workouts" component={WorkoutContainer} />
 
-      </div>
+        </div>
       </Router>
     )
   }

@@ -43,7 +43,7 @@ class App extends React.Component {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={() => <Signup loginUser={this.loginUser} />} />
-        <Route exact path="/workouts" component={WorkoutContainer} />
+        <Route exact path="/workouts" component={WorkoutContainer}/>
 
         </div>
       </Router>

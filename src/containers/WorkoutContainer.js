@@ -15,6 +15,7 @@ class WorkoutContainer extends React.Component {
 
   
   render() {
+    //   console.log('props from app', this.props.loginUser(this.state.workouts))
     return(
       <div className="container row">
         <WorkoutList workouts={this.state.workouts} selectWorkout={this.selectWorkout}/>
@@ -24,13 +25,13 @@ class WorkoutContainer extends React.Component {
   }
 
   fetchWorkouts = () => {
-    fetch(`${API}/users/1/workouts`, {
+    fetch(`${API}/users/${localStorage.id}/workouts`, {
         headers: {
             'Authorization': localStorage.getItem('token')
         }
     }).then(res => res.json())
       .then(data => {
-        console.log(data)
+        // console.log('Workout fetch', data)
         this.setState({
           workouts: data
         })

@@ -1,10 +1,13 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
     state = {
         username: "",
-        password: ""
+        password: "",
+        redirectToMyWorkouts: false
     }
+
     handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
@@ -27,31 +30,39 @@ class Login extends React.Component {
             localStorage.setItem('token', data.token);
             this.props.loginUser(data.currentUser);
         })
+        this.setState({
+            redirectToMyWorkouts: true
+        })
     }
 
     render() {
-        return (
-            <div className="Login-page">
-            <h1>Login</h1>
-            <form 
-                onSubmit={this.handleSubmit}
-                onChange={this.handleChange}
-                className="Log-in-form">
-                <div className="form-control">
-                    <label htmlFor="username">Username:</label>
-                    <input name="username" type="username" value={this.state.username}/>
-                </div>
-                <div className="form-control">
-                    <label htmlFor="password">Password:</label>
-                    <input name="password" type="password" value={this.state.password}/>
-                </div>
-    
-                <button type="submit">Log In</button>
-            </form>
-    
-        </div>
-        )
+        if (this.state.redirectToMyWorkouts) {
+            return <Redirect to="/workouts" />
+        } else {
+            return (
+                <div className="Login-page">
+                <h1>Login</h1>
+                <form 
+                    onSubmit={this.handleSubmit}
+                    onChange={this.handleChange}
+                    className="Log-in-form">
+                    <div className="form-control">
+                        <label htmlFor="username">Username:</label>
+                        <input name="username" type="username" value={this.state.username}/>
+                    </div>
+                    <div className="form-control">
+                        <label htmlFor="password">Password:</label>
+                        <input name="password" type="password" value={this.state.password}/>
+                    </div>
+        
+                    <button type="submit">Log In</button>
+                </form>
+        
+            </div>
+            )
+        }
     }
 }
-  export default Login;
+
+export default Login;
 

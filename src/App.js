@@ -11,14 +11,14 @@ class App extends React.Component {
   render() {
     return(
       <Router>
-      <div className="App">
-        {/* <NavBar /> */}
-        <Route exact path="/" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-        <WorkoutContainer />
-        
+        <div className="App">
+          {/* <NavBar /> */}
+          <Route exact path="/" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/workouts" component={WorkoutContainer} />
+          
 
-      </div>
+        </div>
       </Router>
     )
   }

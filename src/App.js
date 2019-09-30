@@ -5,6 +5,7 @@ import './App.css';
 import WorkoutContainer from './containers/WorkoutContainer'
 import Login from './components/Login'
 import Signup from './components/Signup'
+import Home from './components/Home'
 // import NavBar from './components/NavBar'
 
 class App extends React.Component {
@@ -39,7 +40,8 @@ class App extends React.Component {
       <Router>
       <div className="App">
         {/* <NavBar /> */}
-        <Route exact path="/" component={Login} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={() => <Signup loginUser={this.loginUser} />} />
         <Route exact path="/workouts" component={WorkoutContainer} />
 

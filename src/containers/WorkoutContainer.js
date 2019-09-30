@@ -12,6 +12,7 @@ class WorkoutContainer extends React.Component {
   componentDidMount() {
     this.fetchWorkouts();
   }
+
   
   render() {
     return(
@@ -23,9 +24,13 @@ class WorkoutContainer extends React.Component {
   }
 
   fetchWorkouts = () => {
-    fetch(`${API}/users/1/workouts`)
-      .then(res => res.json())
+    fetch(`${API}/users/1/workouts`, {
+        headers: {
+            'Authorization': localStorage.getItem('token')
+        }
+    }).then(res => res.json())
       .then(data => {
+        console.log(data)
         this.setState({
           workouts: data
         })

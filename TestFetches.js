@@ -84,3 +84,11 @@ fetch('http://localhost:3005/api/v1/routines', {
     })
 }).then(res => res.json())
 .then(data => console.log(data))
+
+fetch('http://localhost:3005/api/v1/users/1/workouts', {
+        headers: {
+            'Authorization': localStorage.getItem('token')
+        }
+    })
+    .then(res => res.json())
+    .then(console.log)

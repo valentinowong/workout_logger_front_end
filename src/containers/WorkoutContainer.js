@@ -16,7 +16,7 @@ class WorkoutContainer extends React.Component {
   render() {
     return(
       <div className="container row">
-        <WorkoutList workouts={this.state.workouts}/>
+        <WorkoutList workouts={this.state.workouts} selectWorkout={this.selectWorkout}/>
         <WorkoutDetails workout={this.findSelectedWorkout()}/>
       </div>
     )
@@ -35,6 +35,12 @@ class WorkoutContainer extends React.Component {
   findSelectedWorkout = () => {
     return this.state.workouts.find(workout => {
       return workout.id === this.state.selectedWorkoutId
+    })
+  }
+
+  selectWorkout = (workout_id) => {
+    this.setState({
+      selectedWorkoutId: workout_id
     })
   }
 

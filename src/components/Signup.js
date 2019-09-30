@@ -26,13 +26,11 @@ class Signup extends React.Component {
         })
         .then(res => res.json())
         .then(data => {
-            // console.log(data)
             localStorage.setItem('token', data.token);
             this.props.loginUser(data.currentUser);
         })
     }
     render() {
-        // console.log(this.state)
         return (
             <div className="Signup-page">
             <h1>Sign Up</h1>

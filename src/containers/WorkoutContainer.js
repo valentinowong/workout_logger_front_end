@@ -7,7 +7,7 @@ const WorkoutContainer = (props) => {
   return(
     <div className="container row">
       <WorkoutList workouts={props.workouts} selectWorkout={props.selectWorkout}/>
-      <WorkoutDetails workout={props.findSelectedWorkout()}/>
+      <WorkoutDetails workout={props.selectedWorkout}/>
     </div>
   )
 

@@ -16,7 +16,7 @@ class App extends React.Component {
       id: null 
     },
     workouts: [],
-    selectedWorkoutId: 1
+    selectedWorkoutId: null
   }
 
   loginUser = (userObj) => {
@@ -25,22 +25,24 @@ class App extends React.Component {
     })
   }
 
-  // componentDidMount() {
-  //   const token = localStorage.getItem('token')
-  //   fetch('http://localhost:3005/authenticate', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'Authorization': token
-  //     }
-  //   })
-  //   .then(res => res.json())
-  //   .then(data => console.log(data))
-  // }
-
   componentDidMount() {
-    this.fetchWorkouts();
+    const token = localStorage.getItem('token')
+    fetch(`${API}/authenticate`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      this.setState({
+        currentUser: {
+          id: data.id
+        }
+      }, this.fetchWorkouts)
+    })
   }
 
   render() {
@@ -49,7 +51,7 @@ class App extends React.Component {
         <div className="App">
           <NavBar />
           <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/login" component={() => <Login loginUser={this.loginUser}/>} />
           <Route exact path="/signup" component={() => <Signup loginUser={this.loginUser} />} />
           <Route 
             exact path="/workouts" 
@@ -57,7 +59,7 @@ class App extends React.Component {
               <WorkoutContainer 
                 {...props} 
                 workouts={this.state.workouts} 
-                findSelectedWorkout={this.findSelectedWorkout} 
+                selectedWorkout={this.findSelectedWorkout()} 
                 selectWorkout={this.selectWorkout}
               />} 
           />
@@ -75,7 +77,7 @@ class App extends React.Component {
   }
 
   fetchWorkouts = () => {
-    fetch(`${API}/users/1/workouts`, {
+    fetch(`${API}/users/${this.state.currentUser.id}/workouts`, {
         headers: {
             'Authorization': localStorage.getItem('token')
         }
@@ -88,9 +90,11 @@ class App extends React.Component {
   }
 
   findSelectedWorkout = () => {
-    return this.state.workouts.find(workout => {
-      return workout.id === this.state.selectedWorkoutId
-    })
+    if(this.state.selectedWorkoutId !== null) {
+      return this.state.workouts.find(workout => {
+        return workout.id === this.state.selectedWorkoutId
+      })
+    }
   }
 
   selectWorkout = (workout_id) => {

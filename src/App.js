@@ -46,15 +46,6 @@ class App extends React.Component {
   render() {
     return(
       <Router>
-<<<<<<< HEAD
-      <div className="App">
-        {/* <NavBar /> */}
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={() => <Signup loginUser={this.loginUser} />} />
-        <Route exact path="/workouts" component={WorkoutContainer}/>
-
-=======
         <div className="App">
           <NavBar />
           <Route exact path="/" component={Home} />
@@ -78,7 +69,6 @@ class App extends React.Component {
                 logWorkout={this.logWorkout} 
               />}
           />
->>>>>>> workout-logging-part-1
         </div>
       </Router>
     )

@@ -5,7 +5,7 @@ const WorkoutList = (props) => {
     
     const renderWorkoutCards = () => {
         return props.workouts.map(workout => {
-            return <WorkoutCard key={workout.id} workout={workout}/>
+            return <WorkoutCard key={workout.id} workout={workout} selectWorkout={props.selectWorkout}/>
         })
     }
     

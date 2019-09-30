@@ -47,38 +47,38 @@ fetch('http://localhost:3005/api/v1/routines', {
         routine_exercises_attributes: [
             {
                 exercise_id: 232,
-                quantity: 0,
+                quantity: null,
                 distance: 1,
                 weight: 20,
-                duration: 0
+                duration: null
             },
             {
                 exercise_id: 200,
                 quantity: 100,
-                distance: 0,
+                distance: null,
                 weight: 20,
-                duration: 0
+                duration: null
             },
             {
                 exercise_id: 214,
                 quantity: 200,
-                distance: 0,
+                distance: null,
                 weight: 20,
-                duration: 0
+                duration: null
             },
             {
                 exercise_id: 185,
                 quantity: 300,
-                distance: 0,
+                distance: null,
                 weight: 20,
-                duration: 0
+                duration: null
             },
             {
                 exercise_id: 232,
-                quantity: 0,
+                quantity: null,
                 distance: 1,
                 weight: 20,
-                duration: 0
+                duration: null
             }
         ]
     })
@@ -86,9 +86,17 @@ fetch('http://localhost:3005/api/v1/routines', {
 .then(data => console.log(data))
 
 fetch('http://localhost:3005/api/v1/users/1/workouts', {
-        headers: {
-            'Authorization': localStorage.getItem('token')
-        }
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+    },
+    body: JSON.stringify({
+        title: "Murph Monday",
+        datetime: "2019-09-30T20:57:37.384Z",
+        photo: 'https://wodwell.com/wp-content/uploads/2014/09/murph.jpg',
+        routine_id: 2
     })
-    .then(res => res.json())
-    .then(console.log)
+}).then(res => res.json())
+.then(data => console.log(data))

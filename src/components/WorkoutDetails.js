@@ -2,8 +2,6 @@ import React from 'react';
 import Exercise from './Exercise'
 
 const WorkoutDetails = (props) => { 
-    
-    console.log(props.workout)
 
     const {title, datetime, routine_name, routine_description, photo, exercises} = props.workout
 

@@ -1,13 +1,16 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-class NavBar extends React.Component {
-    render() {
-      return(
-        <div>
-          
-        </div>
-      )
-    }
-  }
+const NavBar = () => {
   
-  export default NavBar;
+  return(
+    <div className="navbar">
+      <NavLink to="/workouts" exact >My Workouts</NavLink>
+      <NavLink to="/workouts/new" exact>Log New Workout</NavLink>
+      <NavLink to="/login" exact>Login</NavLink>
+      <NavLink to="/signup" exact>Signup</NavLink>
+    </div>
+  )
+}
+
+export default NavBar;

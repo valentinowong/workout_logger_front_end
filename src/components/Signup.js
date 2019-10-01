@@ -26,6 +26,7 @@ class Signup extends React.Component {
         })
         .then(res => res.json())
         .then(data => {
+            console.log('Sign-up',data)
             localStorage.setItem('token', data.token);
             this.props.loginUser(data.currentUser);
         })

@@ -12,6 +12,7 @@ const NavBar = () => {
     <div className="navbar">
       <NavLink to="/workouts" exact >My Workouts</NavLink>
       <NavLink to="/workouts/new" exact>Log New Workout</NavLink>
+      <NavLink to="/routines/new" exact>Log New Routine</NavLink>
       {
         localStorage.getItem('token') ? 
         <NavLink to="/login" onClick={logout}>Logout</NavLink> : 

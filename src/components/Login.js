@@ -27,6 +27,7 @@ class Login extends React.Component {
         })
         .then(res => res.json())
         .then(data => {
+            console.log('Login',data)
             localStorage.setItem('token', data.token);
             this.props.loginUser(data.currentUser);
         })

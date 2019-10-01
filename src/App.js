@@ -9,6 +9,7 @@ import Signup from './components/Signup'
 import Home from './components/Home'
 import API from './Api'
 import NavBar from './components/NavBar'
+import NewRoutineForm from './components/NewRoutineForm'
 
 class App extends React.Component {
   state = {
@@ -26,23 +27,24 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const token = localStorage.getItem('token')
-    fetch(`${API}/authenticate`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': token
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      this.setState({
-        currentUser: {
-          id: data.id
-        }
-      }, this.fetchWorkouts)
-    })
+    // const token = localStorage.getItem('token')
+    // fetch(`${API}/authenticate`, {
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Authorization': token
+    //   }
+    // })
+    // .then(res => res.json())
+    // .then(data => {
+    //   // console.log(data)
+    //   this.setState({
+    //     currentUser: {
+    //       id: data.id
+    //     }
+    //   }, this.fetchWorkouts)
+    // })
+    this.fetchWorkouts()
   }
 
   signOut = e => {
@@ -76,6 +78,8 @@ class App extends React.Component {
                 logWorkout={this.logWorkout} 
               />}
           />
+
+          <Route exact path="/routines/new" component={NewRoutineForm} />
           
         </div>
       </Router>
@@ -107,6 +111,10 @@ class App extends React.Component {
     this.setState({
       selectedWorkoutId: workout_id
     })
+  }
+
+  logRoutine = () => {
+
   }
 
   logWorkout = (workout_title, workout_photo, routine_id) => {

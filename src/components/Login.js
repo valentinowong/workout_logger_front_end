@@ -27,12 +27,12 @@ class Login extends React.Component {
         })
         .then(res => res.json())
         .then(data => {
-            localStorage.setItem('token', data.token);
-            this.props.loginUser(data.currentUser);
+            this.props.loginUser(data);
+            this.setState({
+                redirectToMyWorkouts: true
+            })
         })
-        this.setState({
-            redirectToMyWorkouts: true
-        })
+        
     }
 
     render() {
@@ -41,24 +41,19 @@ class Login extends React.Component {
         } else {
             return (
                 <div className="Login-page">
-                <h1>Login</h1>
-                <form 
-                    onSubmit={this.handleSubmit}
-                    onChange={this.handleChange}
-                    className="Log-in-form">
-                    <div className="form-control">
-                        <label htmlFor="username">Username:</label>
-                        <input name="username" type="username" value={this.state.username}/>
-                    </div>
-                    <div className="form-control">
-                        <label htmlFor="password">Password:</label>
-                        <input name="password" type="password" value={this.state.password}/>
-                    </div>
-        
-                    <button type="submit">Log In</button>
-                </form>
-        
-            </div>
+                    <h1>Login</h1>
+                    <form onSubmit={this.handleSubmit} className="Log-in-form">
+                        <div className="form-group">
+                            <label htmlFor="username">Username:</label>
+                            <input name="username" type="username" value={this.state.username} onChange={this.handleChange}/>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password:</label>
+                            <input name="password" type="password" value={this.state.password} onChange={this.handleChange}/>
+                        </div>
+                        <button className="btn btn-secondary"type="submit">Log In</button>
+                    </form>
+                </div>
             )
         }
     }

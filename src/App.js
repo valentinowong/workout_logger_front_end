@@ -12,36 +12,31 @@ import NavBar from './components/NavBar'
 
 class App extends React.Component {
   state = {
-    currentUser: {
-      id: null 
-    },
+    currentUser: null,
     workouts: [],
     selectedWorkoutId: null
   }
 
-  loginUser = (userObj) => {
-    this.setState({
-      currentUser: userObj
-    })
+  loginUser = (data) => {
+    this.saveTokenToLocalStorage(data.token);
+    this.setCurrentUser(data.currentUser);
   }
 
-  componentDidMount() {
-    const token = localStorage.getItem('token')
-    fetch(`${API}/authenticate`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': token
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      this.setState({
-        currentUser: {
-          id: data.id
-        }
-      }, this.fetchWorkouts)
+  setCurrentUser = (userObj) => {
+    this.setState({
+      currentUser: userObj
+    },this.fetchWorkouts)
+  }
+
+  saveTokenToLocalStorage = (token) => {
+    localStorage.setItem('token', token)
+  }
+
+  logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
+    this.setState({
+      currentUser: null
     })
   }
 
@@ -49,7 +44,7 @@ class App extends React.Component {
     return(
       <Router>
         <div className="App">
-          <NavBar />
+          <NavBar logout={this.logout} currentUser={this.state.currentUser}/>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={() => <Login loginUser={this.loginUser}/>} />
           <Route exact path="/signup" component={() => <Signup loginUser={this.loginUser} />} />
@@ -61,6 +56,8 @@ class App extends React.Component {
                 workouts={this.state.workouts} 
                 selectedWorkout={this.findSelectedWorkout()} 
                 selectWorkout={this.selectWorkout}
+                setCurrentUser={this.setCurrentUser}
+                fetchWorkouts={this.fetchWorkouts}
               />} 
           />
           <Route 
@@ -69,6 +66,7 @@ class App extends React.Component {
               <RoutineContainer 
                 {...props} 
                 logWorkout={this.logWorkout} 
+                setCurrentUser={this.setCurrentUser}
               />}
           />
         </div>
@@ -84,7 +82,8 @@ class App extends React.Component {
     }).then(res => res.json())
       .then(data => {
         this.setState({
-          workouts: data
+          workouts: data, 
+          selectedWorkoutId: data[0].id
         })
       })
   }

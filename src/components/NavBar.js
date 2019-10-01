@@ -1,12 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const NavBar = () => {
-  
-  const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('id');
-  }
+const NavBar = (props) => {
 
   return(
     <div className="navbar">
@@ -14,7 +9,7 @@ const NavBar = () => {
       <NavLink to="/workouts/new" exact>Log New Workout</NavLink>
       {
         localStorage.getItem('token') ? 
-        <NavLink to="/login" onClick={logout}>Logout</NavLink> : 
+        <NavLink to="/login" onClick={props.logout}>Logout</NavLink> : 
         <>
           <NavLink to="/login" exact>Login</NavLink>
           <NavLink to="/signup" exact>Signup</NavLink>

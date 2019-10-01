@@ -10,6 +10,19 @@ class RoutineContainer extends React.Component {
   } 
 
   componentDidMount() {
+    // const token = localStorage.getItem('token')
+    // fetch(`${API}/authenticate`, {
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Authorization': token
+    //   }
+    // })
+    // .then(res => res.json())
+    // .then(data => {
+    //   console.log('Routine Container Component Did Mount', data)
+    //   this.props.setCurrentUser(data.currentUser)
+    // })
     this.fetchRoutines();
   }
 

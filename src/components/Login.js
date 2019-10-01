@@ -27,10 +27,12 @@ class Login extends React.Component {
         })
         .then(res => res.json())
         .then(data => {
-            this.props.loginUser(data);
-            this.setState({
-                redirectToMyWorkouts: true
-            })
+            console.log('Login',data)
+            localStorage.setItem('token', data.token);
+            this.props.loginUser(data.currentUser);
+        })
+        this.setState({
+            redirectToMyWorkouts: true
         })
         
     }

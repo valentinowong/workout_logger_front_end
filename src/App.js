@@ -9,6 +9,7 @@ import Signup from './components/Signup'
 import Home from './components/Home'
 import API from './Api'
 import NavBar from './components/NavBar'
+import NewRoutineForm from './components/NewRoutineForm'
 
 class App extends React.Component {
   state = {
@@ -74,6 +75,8 @@ class App extends React.Component {
                 setCurrentUser={this.setCurrentUser}
               />}
           />
+
+          <Route exact path="/routines/new" component={NewRoutineForm} />
           
         </div>
       </Router>
@@ -106,6 +109,10 @@ class App extends React.Component {
     this.setState({
       selectedWorkoutId: workout_id
     })
+  }
+
+  logRoutine = () => {
+
   }
 
   logWorkout = (workout_title, workout_photo, routine_id) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import WorkoutContainer from './containers/WorkoutContainer'
 import RoutineContainer from './containers/RoutineContainer'
@@ -52,8 +52,8 @@ class App extends React.Component {
         <div className="App">
           <NavBar logout={this.logout} currentUser={this.state.currentUser}/>
           <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={() => <Login loginUser={this.loginUser}/>} />
-          <Route exact path="/signup" component={() => <Signup loginUser={this.loginUser} />} />
+          <Route exact path="/login" component={() => <Login loginUser={this.loginUser} currentUser={this.state.currentUser}/>} />
+          <Route exact path="/signup" component={() => <Signup loginUser={this.loginUser} currentUser={this.state.currentUser}/>} />
           <Route 
             exact path="/workouts" 
             render={(props) => 

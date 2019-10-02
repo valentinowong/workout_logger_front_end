@@ -1,5 +1,4 @@
 import React from 'react';
-import Suggestions from './Suggestions'
 import { Redirect } from 'react-router-dom';
 
 const API_URL = 'http://localhost:3005/api/v1/exercises'
@@ -50,7 +49,7 @@ class NewRoutineForm extends React.Component {
         if (!localStorage.getItem('token')) {
             return <Redirect to="/login" />
         } else {
-        return(
+        return (
             <div>
                 <form onSubmit={this.handleSubmit}>
                 <h2>Create New Routine</h2>
@@ -105,7 +104,7 @@ class NewRoutineForm extends React.Component {
                 
                 </form>
             </div>
-        )
+        )}
     }
 
     fetchExercises = () => {
@@ -139,11 +138,6 @@ class NewRoutineForm extends React.Component {
             return <option>{exercise.name}</option>
         })
     }
-
-
-
-
-
 }
 
 export default NewRoutineForm;

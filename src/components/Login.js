@@ -16,7 +16,6 @@ class Login extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-
         fetch('http://localhost:3005/api/v1/authenticate', {
             method: 'POST',
             headers: {
@@ -27,12 +26,16 @@ class Login extends React.Component {
         })
         .then(res => res.json())
         .then(data => {
-            console.log('Login',data)
-            this.props.loginUser(data);
+            this.props.loginUser(data);  
         })
-        this.setState({
-            redirectToMyWorkouts: true
-        })
+    }
+
+    componentDidMount() {
+        if (this.props.currentUser) {
+            this.setState({
+                redirectToMyWorkouts: true
+            })
+        }
     }
 
     render() {

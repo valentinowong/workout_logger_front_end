@@ -20,7 +20,6 @@ class WorkoutContainer extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      console.log('Workout Container Component Did Mount', data)
       this.props.setCurrentUser(data.currentUser)
       this.props.fetchWorkouts();
     })

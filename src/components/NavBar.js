@@ -9,7 +9,7 @@ const NavBar = (props) => {
 
   return(
     <div className="navbar navbar-light bg-primary" >
-      <span class="navbar-brand mb-0 h1" style={text}>WeFit</span>
+      <span className="navbar-brand mb-0 h1" style={text}>WeFit</span>
       <NavLink to="/workouts" exact style={text}>My Workouts</NavLink>
       <NavLink to="/workouts/new" exact style={text}>Log New Workout</NavLink>
       <NavLink to="/routines/new" exact style={text}>Log New Routine</NavLink>

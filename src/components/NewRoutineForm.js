@@ -1,12 +1,23 @@
 import React from 'react';
-import Suggestions from './Suggestions'
+
+const API_URL = 'http://localhost:3005/api/v1/exercises'
 
 class NewRoutineForm extends React.Component {
     state = {
         name: '',
         description: '',
         query: '',
-        exercises: []
+        exercises: [],
+        displayExercises: [],
+        routineExercises: [],
+        quantity: null,
+        distance: null, 
+        weight: null, 
+        duration: null
+    }
+
+    componentDidMount() {
+        this.fetchExercises();
     }
 
     handleChange = (e) => {
@@ -15,36 +26,26 @@ class NewRoutineForm extends React.Component {
         })
     }
 
-
-    handleInputChange = () => {
+    handleInputChange = e => {
         this.setState({
-            query: this.serach.value 
+            query: e.target.value
         }, () => {
-            if (this.state.query && this.state.query.length > 1) {
-                this.fetchExercises()
-            }
-         else if(!this.state.query) {
-            
-        }
+            // if (this.state.query && this.state.query.length > 1) {
+                this.filterExercises();
+                this.mapDisplayExercises();
+            // }
         })
     }
 
-    fetchExercises = () => {
-        fetch('http://localhost:3005/api/v1/exercises', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('token')
-            }
+    handleSelectChange = e => {
+        this.setState({
+            query: e.target.value
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            this.setState({ exercises: data }) 
-        }) 
     }
+
 
     render() {
+        console.log(this.state)
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -56,14 +57,83 @@ class NewRoutineForm extends React.Component {
                 <h3>Select the Exercise</h3>
                 <input
                     placeholder="Search for exercises"
-                    ref={input => this.serach = input}
+                    name="query"
+                    value={this.state.query}
                     onChange={this.handleInputChange}
                 />
-                <Suggestions results={this.state.exercises} />
+                <button>Select Exercises</button><br/>
+                <input
+                    placeholder="Quantity"
+                    name="quantity"
+                    value={this.state.quantity}
+                    onChange={this.handleChange}
+                    type="number"
+                /><br/>
+                <input
+                    placeholder="Distance"
+                    name="distance"
+                    value={this.state.distance}
+                    onChange={this.handleChange}
+                    type="number"
+                /><br/>
+                <input
+                    placeholder="Weight"
+                    name="weight"
+                    value={this.state.weight}
+                    onChange={this.handleChange}
+                    type="number"
+                /><br/>
+                <input
+                    placeholder="Duration"
+                    name="duration"
+                    value={this.state.duration}
+                    onChange={this.handleChange}
+                    type="number"
+                /><br/>
+                {/* <ul>
+                    {this.mapDisplayExercises()}
+                </ul> */}
+
+                <br/>
+                <select onChange={this.handleSelectChange}>
+                    {this.mapDisplayExercises()}
+                </select>
                 
                 </form>
             </div>
         )
+    }
+
+    fetchExercises = () => {
+        fetch(`${API_URL}`, {
+            headers: {
+                // 'Accept': 'application/json',
+                // 'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            this.setState({ 
+                exercises: data
+            }) 
+        }) 
+    }
+
+    filterExercises = () => {
+        const updatedDisplayExercises = this.state.exercises.filter(exercise => {
+            return exercise.name.toLowerCase().includes(this.state.query.toLowerCase())
+        })
+        this.setState({
+            displayExercises: updatedDisplayExercises
+        })
+
+    }
+
+    mapDisplayExercises = () => {
+        return this.state.displayExercises.map(exercise => {
+            return <option>{exercise.name}</option>
+        })
     }
 
 

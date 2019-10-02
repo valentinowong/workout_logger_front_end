@@ -92,7 +92,6 @@ class App extends React.Component {
       .then(data => {
         this.setState({
           workouts: data, 
-          selectedWorkoutId: data[0].id
         })
       })
   }

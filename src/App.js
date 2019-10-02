@@ -92,6 +92,7 @@ class App extends React.Component {
         }
     }).then(res => res.json())
       .then(data => {
+<<<<<<< HEAD
         if (data.length>0) {
           this.setState({
             workouts: data,
@@ -99,6 +100,11 @@ class App extends React.Component {
           })
         }
         
+=======
+        this.setState({
+          workouts: data, 
+        })
+>>>>>>> c7ba87fb5a1bee15cb2626a1493fdada5239977b
       })
   }
 

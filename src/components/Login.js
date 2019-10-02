@@ -29,12 +29,10 @@ class Login extends React.Component {
         .then(data => {
             console.log('Login',data)
             this.props.loginUser(data);
-            this.setState({
-                redirectToMyWorkouts: true
-            })
         })
-        
-        
+        this.setState({
+            redirectToMyWorkouts: true
+        })
     }
 
     render() {
@@ -53,7 +51,7 @@ class Login extends React.Component {
                             <label htmlFor="password">Password:</label>
                             <input name="password" type="password" value={this.state.password} onChange={this.handleChange}/>
                         </div>
-                        <button className="btn btn-secondary"type="submit">Log In</button>
+                        <button className="btn btn-secondary" type="submit">Log In</button>
                     </form>
                 </div>
             )

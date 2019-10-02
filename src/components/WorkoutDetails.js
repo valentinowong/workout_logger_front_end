@@ -22,7 +22,6 @@ const WorkoutDetails = (props) => {
 
     return(
         <div className='col-md-8' style={{textAlign: 'left'}}>
-            <h2>Workout Details</h2>
             <h3>
                 {formattedDateTime}
             </h3>

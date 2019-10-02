@@ -11,7 +11,7 @@ const WorkoutList = (props) => {
     
     return(
         <div className='col-md-4'>
-            <h2>Workout List</h2>
+            <h2>My Workouts</h2>
             <ul className='list-group'>
                 {renderWorkoutCards()}
             </ul>

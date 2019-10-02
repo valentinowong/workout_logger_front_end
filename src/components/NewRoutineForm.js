@@ -1,5 +1,6 @@
 import React from 'react';
 import Suggestions from './Suggestions'
+import { Redirect } from 'react-router-dom';
 
 class NewRoutineForm extends React.Component {
     state = {
@@ -45,25 +46,29 @@ class NewRoutineForm extends React.Component {
     }
 
     render() {
-        return(
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                <h2>Create New Routine</h2>
-                    <label>Routine Name</label>
-                    <input name='name' onChange={this.handleChange} value={this.state.name} /><br/>
-                    <label>Routine Description</label>
-                    <textarea name='description' onChange={this.handleChange} value={this.state.description}/><br/>
-                <h3>Select the Exercise</h3>
-                <input
-                    placeholder="Search for exercises"
-                    ref={input => this.serach = input}
-                    onChange={this.handleInputChange}
-                />
-                <Suggestions results={this.state.exercises} />
-                
-                </form>
-            </div>
-        )
+        if (!localStorage.getItem('token')) {
+            return <Redirect to="/login" />
+        } else {
+            return(
+                <div>
+                    <form onSubmit={this.handleSubmit}>
+                    <h2>Create New Routine</h2>
+                        <label>Routine Name</label>
+                        <input name='name' onChange={this.handleChange} value={this.state.name} /><br/>
+                        <label>Routine Description</label>
+                        <textarea name='description' onChange={this.handleChange} value={this.state.description}/><br/>
+                    <h3>Select the Exercise</h3>
+                    <input
+                        placeholder="Search for exercises"
+                        ref={input => this.serach = input}
+                        onChange={this.handleInputChange}
+                    />
+                    <Suggestions results={this.state.exercises} />
+                    
+                    </form>
+                </div>
+            )
+        }
     }
 
 

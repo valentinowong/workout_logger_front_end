@@ -64,6 +64,7 @@ class App extends React.Component {
                 selectWorkout={this.selectWorkout}
                 setCurrentUser={this.setCurrentUser}
                 fetchWorkouts={this.fetchWorkouts}
+                currentUser={this.state.currentUser}
               />} 
           />
           <Route 
@@ -73,6 +74,7 @@ class App extends React.Component {
                 {...props} 
                 logWorkout={this.logWorkout} 
                 setCurrentUser={this.setCurrentUser}
+                currentUser={this.state.currentUser}
               />}
           />
 
@@ -90,10 +92,13 @@ class App extends React.Component {
         }
     }).then(res => res.json())
       .then(data => {
-        this.setState({
-          workouts: data, 
-          selectedWorkoutId: data[0].id
-        })
+        if (data.length>0) {
+          this.setState({
+            workouts: data,
+            selectedWorkoutId: data[0].id
+          })
+        }
+        
       })
   }
 

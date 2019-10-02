@@ -20,7 +20,7 @@ const Exercise = (props) => {
         if (routine_distance) {
             return renderDistanceExercise();
         } else if (routine_duration) {
-            renderDurationExercise();
+            return renderDurationExercise();
         } else if (routine_quantity) {
             return renderQuantityExercise();
         }

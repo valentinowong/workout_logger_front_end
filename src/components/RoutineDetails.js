@@ -25,6 +25,8 @@ class RoutineDetails extends React.Component {
                     {this.renderExercises()}
                 </ol>
                 <button className='btn btn-secondary' onClick={this.revealNewWorkoutForm}>Select This Workout</button>
+                <br/>
+                <br/>
                 {this.state.renderNewWorkoutForm ? <NewWorkoutForm logWorkout={this.props.logWorkout} routine_id={id}/> : null}
             </div>
         )

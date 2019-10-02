@@ -28,10 +28,22 @@ class NewWorkoutForm extends React.Component {
         } else {
             return (
                 <form onSubmit={this.handleSubmit}>
-                    <label>Workout Title</label>
-                    <input name='title' value={this.state.title} onChange={this.handleChange}/><br/>
-                    <label>Workout Photo</label>
-                    <input name='photo' value={this.state.photo} onChange={this.handleChange}/>
+                    <h3>Add Workout Details: </h3>
+                    <input 
+                        className="form-control"
+                        placeholder="Workout Title"
+                        name='title' 
+                        value={this.state.title} 
+                        onChange={this.handleChange} 
+                    />
+                    <br/>
+                    <input 
+                        className="form-control"
+                        placeholder="Workout Photo"
+                        name='photo' 
+                        value={this.state.photo} 
+                        onChange={this.handleChange}  
+                    />
                     <button className='btn btn-primary' type='submit'>Log This Workout</button>
                 </form>
             )

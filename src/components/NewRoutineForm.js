@@ -1,5 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import Exercise from './Exercise';
+import Select from 'react-select';
 
 const API_URL = 'http://localhost:3005/api/v1/exercises'
 
@@ -14,7 +16,8 @@ class NewRoutineForm extends React.Component {
         quantity: null,
         distance: null, 
         weight: null, 
-        duration: null
+        duration: null,
+        redirectToNewWorkoutForm: false
     }
 
     componentDidMount() {
@@ -31,16 +34,14 @@ class NewRoutineForm extends React.Component {
         this.setState({
             query: e.target.value
         }, () => {
-            // if (this.state.query && this.state.query.length > 1) {
                 this.filterExercises();
                 this.mapDisplayExercises();
-            // }
         })
     }
 
-    handleSelectChange = e => {
+    handleSelectChange = option => {
         this.setState({
-            query: e.target.value
+            query: option.label
         })
     }
 
@@ -64,85 +65,92 @@ class NewRoutineForm extends React.Component {
     handleNewRoutineSubmit = e => {
         e.preventDefault();
         this.logRoutine();
+        this.setState({
+            redirectToNewWorkoutForm: true
+        })
     }
-
 
     render() {
         if (!localStorage.getItem('token')) {
             return <Redirect to="/login" />
+        } else if (this.state.redirectToNewWorkoutForm) {
+            return <Redirect to="/workouts/new" />
         } else {
         return (
-            <div>
+            <div className="container">
+
                 <form onSubmit={this.handleNewRoutineSubmit}>
                 <h2>Create New Routine</h2>
-                    <label>Routine Name</label>
-                    <input name='name' onChange={this.handleChange} value={this.state.name} /><br/>
-                    <label>Routine Description</label>
-                    <textarea name='description' onChange={this.handleChange} value={this.state.description}/><br/>
-                    <button>Submit Your New Routine</button><br/>
-                </form>
-                
-                <form>
-                    <h4>Added Exercises</h4>
-                    <ul>
-                        {this.state.routineExercises.map(attributes => {
-                            return (
-                            <li>
-                            Name: {attributes.exercise_name}<br/>
-                            Quantity: {attributes.quantity}<br/>
-                            Distance: {attributes.distance}<br/>
-                            Weight: {attributes.weight}<br/>
-                            Duration: {attributes.duration}<br/>
-                            </li>
-                            )
-                        })}
-                        
-                    </ul>
-                </form>
-
-                <form onSubmit={this.handleExerciseSubmit}>
-                <h3>Select the Exercise</h3>
-                <input
-                    placeholder="Search for exercises"
-                    name="query"
-                    value={this.state.query}
-                    onChange={this.handleInputChange}
+                <input 
+                    className="form-control" 
+                    type="text" 
+                    name='name' 
+                    onChange={this.handleChange} 
+                    value={this.state.name} 
+                    placeholder="Routine Name"
                 />
-                <select onChange={this.handleSelectChange}>
-                    {this.mapDisplayExercises()}
-                </select><br/>
-                <input
-                    placeholder="Quantity"
-                    name="quantity"
-                    value={this.state.quantity}
-                    onChange={this.handleChange}
-                    type="number"
-                /><br/>
-                <input
-                    placeholder="Distance"
-                    name="distance"
-                    value={this.state.distance}
-                    onChange={this.handleChange}
-                    type="number"
-                /><br/>
-                <input
-                    placeholder="Weight"
-                    name="weight"
-                    value={this.state.weight}
-                    onChange={this.handleChange}
-                    type="number"
-                /><br/>
-                <input
-                    placeholder="Duration"
-                    name="duration"
-                    value={this.state.duration}
-                    onChange={this.handleChange}
-                    type="number"
-                /><br/>
-                <button>Select Exercises</button><br/>
-
                 <br/>
+                <textarea 
+                    className="form-control" 
+                    name='description' 
+                    onChange={this.handleChange} 
+                    value={this.state.description}
+                    placeholder="Routine Description"
+                />
+                <br/>
+                <button className="btn btn-primary">Submit Your New Routine</button><br/>
                 </form>
+
+                <div className="container row">
+                    <div className='col-md-6' style={{textAlign: 'left'}}>
+                        <h4>Added Exercises: </h4>
+                        <ul>
+                            {this.renderRoutineExercises()}
+                        </ul>
+                    </div>
+
+                    <div className='col-md-6' style={{textAlign: 'left', padding: '20px'}}>
+                        <form onSubmit={this.handleExerciseSubmit}>
+                        <Select placeholder="Search for Exercises" options={this.renderDisplayExercises()} onChange={this.handleSelectChange}/>
+                        <br/>
+                        <input
+                            placeholder="Quantity"
+                            name="quantity"
+                            value={this.state.quantity}
+                            onChange={this.handleChange}
+                            type="number"
+                            className="form-control" 
+                        /><br/>
+                        <input
+                            placeholder="Distance"
+                            name="distance"
+                            value={this.state.distance}
+                            onChange={this.handleChange}
+                            type="number"
+                            className="form-control" 
+                        /><br/>
+                        <input
+                            placeholder="Weight"
+                            name="weight"
+                            value={this.state.weight}
+                            onChange={this.handleChange}
+                            type="number"
+                            className="form-control" 
+                        /><br/>
+                        <input
+                            placeholder="Duration"
+                            name="duration"
+                            value={this.state.duration}
+                            onChange={this.handleChange}
+                            type="number"
+                            className="form-control" 
+                        /><br/>
+                        <button className="btn btn-secondary" >Add Exercises</button><br/>
+
+                        <br/>
+                        </form>
+                    </div>
+                </div>
             </div>
         )}
     }
@@ -150,8 +158,6 @@ class NewRoutineForm extends React.Component {
     fetchExercises = () => {
         fetch(`${API_URL}`, {
             headers: {
-                // 'Accept': 'application/json',
-                // 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token')
             }
         })
@@ -191,9 +197,25 @@ class NewRoutineForm extends React.Component {
 
     }
 
-    mapDisplayExercises = () => {
-        return this.state.displayExercises.map(exercise => {
-            return <option id={exercise.id} >{exercise.name}</option>
+    renderRoutineExercises = () => {
+        const reformattedExercises = this.state.routineExercises.map(routineExercise => {
+            const reformattedExercise = {};
+            reformattedExercise.id = routineExercise.exercise_id;
+            reformattedExercise.name = routineExercise.exercise_name;
+            reformattedExercise.routine_distance = routineExercise.distance;
+            reformattedExercise.routine_duration = routineExercise.duration;
+            reformattedExercise.routine_quantity = routineExercise.quantity;
+            reformattedExercise.routine_weight = routineExercise.weight;
+        return reformattedExercise
+        });
+        return reformattedExercises.map( (exercise, idx) => {
+            return <Exercise key={`${exercise.id}-${idx}`} exercise={exercise} />
+        })
+    }
+
+    renderDisplayExercises = () => {
+        return this.state.exercises.map(exercise => {
+            return {label: exercise.name, value: exercise.id}
         })
     }
 }

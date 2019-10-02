@@ -116,10 +116,6 @@ class App extends React.Component {
     })
   }
 
-  logRoutine = () => {
-
-  }
-
   logWorkout = (workout_title, workout_photo, routine_id) => {
     fetch(`${API}/users/1/workouts`,{
       method: 'POST',

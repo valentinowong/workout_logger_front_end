@@ -44,6 +44,28 @@ class NewRoutineForm extends React.Component {
         })
     }
 
+    handleExerciseSubmit = e => {
+        e.preventDefault();
+        const exercise = this.state.exercises.find(exercise => exercise.name === this.state.query)
+        const newExercise = {
+            exercise_id: exercise.id,
+            exercise_name: exercise.name,
+            quantity: this.state.quantity,
+            distance: this.state.distance,
+            weight: this.state.weight,
+            duration: this.state.duration
+        }
+        this.setState({
+            routineExercises: [...this.state.routineExercises, newExercise]
+        })
+      
+    }
+
+    handleNewRoutineSubmit = e => {
+        e.preventDefault();
+        this.logRoutine();
+    }
+
 
     render() {
         if (!localStorage.getItem('token')) {
@@ -51,12 +73,34 @@ class NewRoutineForm extends React.Component {
         } else {
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleNewRoutineSubmit}>
                 <h2>Create New Routine</h2>
                     <label>Routine Name</label>
                     <input name='name' onChange={this.handleChange} value={this.state.name} /><br/>
                     <label>Routine Description</label>
                     <textarea name='description' onChange={this.handleChange} value={this.state.description}/><br/>
+                    <button>Submit Your New Routine</button><br/>
+                </form>
+                
+                <form>
+                    <h4>Added Exercises</h4>
+                    <ul>
+                        {this.state.routineExercises.map(attributes => {
+                            return (
+                            <li>
+                            Name: {attributes.exercise_name}<br/>
+                            Quantity: {attributes.quantity}<br/>
+                            Distance: {attributes.distance}<br/>
+                            Weight: {attributes.weight}<br/>
+                            Duration: {attributes.duration}<br/>
+                            </li>
+                            )
+                        })}
+                        
+                    </ul>
+                </form>
+
+                <form onSubmit={this.handleExerciseSubmit}>
                 <h3>Select the Exercise</h3>
                 <input
                     placeholder="Search for exercises"
@@ -64,7 +108,9 @@ class NewRoutineForm extends React.Component {
                     value={this.state.query}
                     onChange={this.handleInputChange}
                 />
-                <button>Select Exercises</button><br/>
+                <select onChange={this.handleSelectChange}>
+                    {this.mapDisplayExercises()}
+                </select><br/>
                 <input
                     placeholder="Quantity"
                     name="quantity"
@@ -93,15 +139,9 @@ class NewRoutineForm extends React.Component {
                     onChange={this.handleChange}
                     type="number"
                 /><br/>
-                {/* <ul>
-                    {this.mapDisplayExercises()}
-                </ul> */}
+                <button>Select Exercises</button><br/>
 
                 <br/>
-                <select onChange={this.handleSelectChange}>
-                    {this.mapDisplayExercises()}
-                </select>
-                
                 </form>
             </div>
         )}
@@ -123,6 +163,24 @@ class NewRoutineForm extends React.Component {
         }) 
     }
 
+    logRoutine = () => {
+        fetch('http://localhost:3005/api/v1/routines',{
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+              name: this.state.name,
+              description: this.state.description,
+              routine_exercises_attributes: this.state.routineExercises
+          })
+        })
+        .then(res => res.json())
+        .then('logNewRoutine', console.log)
+      }
+
     filterExercises = () => {
         const updatedDisplayExercises = this.state.exercises.filter(exercise => {
             return exercise.name.toLowerCase().includes(this.state.query.toLowerCase())
@@ -135,7 +193,7 @@ class NewRoutineForm extends React.Component {
 
     mapDisplayExercises = () => {
         return this.state.displayExercises.map(exercise => {
-            return <option>{exercise.name}</option>
+            return <option id={exercise.id} >{exercise.name}</option>
         })
     }
 }

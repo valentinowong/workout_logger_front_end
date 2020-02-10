@@ -1,4 +1,19 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Workout Logger (weFit)
+A workout logging app that users can create their own routines selecting different exercises from a list and 
+add their own workout routines
+
+## Features 
+- Users create username and password and log in to a created account
+- Users create their own routines from a list of exercises and set their own goals for each exercise
+- Users build workout routines by selecting existing routines or by creating new routines 
+
+## Technologies used
+- React 
+- Bootstrap 
+
+## Demo
+- [Video](https://vimeo.com/manage/387333523/general)
 
 ## Available Scripts
 
@@ -66,3 +81,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Contributors
+- Valentino Wong
+- Hyoeun Lee
